@@ -1,4 +1,4 @@
-package com.example.checkr.DTO;
+package com.example.checkr.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

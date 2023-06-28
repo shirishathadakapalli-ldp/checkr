@@ -1,6 +1,6 @@
 package com.example.checkr.controller;
 
-import com.example.checkr.DTO.APIResponse;
+import com.example.checkr.util.APIResponse;
 import com.example.checkr.DTO.CandidateDto;
 import com.example.checkr.repository.CandidateRepo;
 import com.example.checkr.service.CandidateService;
