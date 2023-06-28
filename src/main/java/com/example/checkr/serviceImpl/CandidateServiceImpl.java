@@ -7,8 +7,8 @@ import com.example.checkr.repository.CandidateRepo;
 import com.example.checkr.service.CandidateService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,6 +63,20 @@ public class CandidateServiceImpl implements CandidateService {
         }
         return modelMapper.map(candidate, CandidateDto.class);
     }
+
+    @Override
+    public List<CandidateDto> searchCandidates(String query) {
+        List<Candidate> candidateList=candidateRepo.searchCandidates(query);
+        return candidateList.stream().map(candidate->modelMapper.map(candidate,CandidateDto.class)).
+                collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<CandidateDto> getCandidatesWithPagination(int offset, int pageSize) {
+        Page<Candidate> candidates= candidateRepo.findAll(PageRequest.of(offset,pageSize));
+        return candidates.map(candidate -> modelMapper.map(candidate,CandidateDto.class));
+    }
+
     @Override
     public void deleteCandidateById(long candidateId) {
         Optional<Candidate> candidate=candidateRepo.findById(candidateId);
@@ -70,4 +84,5 @@ public class CandidateServiceImpl implements CandidateService {
             candidateRepo.deleteById(candidateId);
         }
     }
+
 }
